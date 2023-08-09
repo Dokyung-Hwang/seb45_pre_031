@@ -34,3 +34,4 @@ jobs:
           docker build -t 7elenven-cicd . 
           docker tag 7elenven-cicd dokyung94/7eleven-cicd:${GITHUB_SHA::7}
           docker push dokyung94/7eleven-cicd:${GITHUB_SHA::7}
+        working-directory: ${{ env.working-directory }}
