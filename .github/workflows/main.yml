@@ -44,12 +44,12 @@ jobs:
           aws-region: ap-northeast-2
 
 
-      - name: Start Session Manager session
+      - name: Start SSH Client
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.AWS_HOST }} # EC2 인스턴스 퍼블릭 DNS
           username: ec2-user
-          key: ${{ secrets.PRIVATE_KEY }} # pem 키
+          key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # pem 키
 
 
 
