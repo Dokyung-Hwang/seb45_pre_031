@@ -42,19 +42,22 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
-      - name: Start SSH Client
-        run: aws ssm start-session --target i-0d95576197b6c8bc5
-        working-directory: ${{ env.working-directory }}
+
+
+      - name: Start Session Manager session
+        uses: appleboy/ssh-action@main
+        with:
+          host: ${{ secrets.AWS_HOST }} # EC2 인스턴스 퍼블릭 DNS
+          username: ec2-user
+          key: ${{ secrets.PRIVATE_KEY }} # pem 키
+
+
 
       - name: Deploy to Server
-        uses: aws-actions/configure-aws-credentials@v1
         env:
-          AWS_HOST: $ {{ secrets.AWS_HOST }}
-          username: ec2-user
-          key: $ {{ secrets.PRIVATE_KEY }}   # Pem 키
-#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          AWS_REGION: ap-northeast-2
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ap-northeast-2
         run: |
           aws ssm send-command \
             --instance-ids i-0d95576197b6c8bc5 \
