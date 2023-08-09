@@ -48,7 +48,7 @@ jobs:
 
       - name: Deploy to Server
         uses: aws-actions/configure-aws-credentials@v1
-        with:
+        env:
           AWS_HOST: $ {{ secrets.AWS_HOST }}
           username: ec2-user
           key: $ {{ secrets.PRIVATE_KEY }}   # Pem 키
